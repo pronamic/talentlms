@@ -2,6 +2,14 @@
 
 abstract class TalentLMS_ApiResource{
 
+	# Duobus edit: added this function from main API
+	protected static function _scopedGetCustomCourseFields($class){
+		$url = self::_classUrlByMethodName('customCourseFields');
+		$response = TalentLMS_ApiRequestor::request('get', $url);
+
+		return $response;
+	}
+
 	protected static function _scopedRetrieve($class, $id){
 		$url = self::_instanceUrl($class, $id);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
@@ -344,6 +352,9 @@ abstract class TalentLMS_ApiResource{
 		else if($method == 'getUserStatusInCourse'){
 			return "/getuserstatusincourse";
 		}
+		else if($method == 'customCourseFields'){ # Duobus added
+			return "/getcustomcoursefields";
+		}
 		else if($method == 'getTimeline'){
 			return "/gettimeline";
 		}
@@ -393,4 +404,4 @@ abstract class TalentLMS_ApiResource{
 			throw new TalentLMS_ApiError("You must pass an array as the first argument to ".$class.'::'.$method."() method calls.");
 		}
 	}
-}
+}}
