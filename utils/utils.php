@@ -104,11 +104,83 @@ if(!function_exists('tlms_getCourses')){
 			$wpdb->query('TRUNCATE TABLE '.TLMS_COURSES_TABLE);
 		}
 
+		// Duobus edit start #1
+
+		/*
+		# alter courses table to have 2 new fields
+
+		ALTER TABLE `wp_talentlms_courses` ADD `accreditatie` BIGINT(9) NOT NULL AFTER `certification_duration`, ADD `course_type` VARCHAR(255) NOT NULL AFTER `accreditatie`, ADD INDEX (`accreditatie`), ADD INDEX (`course_type`);
+
+
+		# new table for customfields
+
+		CREATE TABLE `tlms_customfields` (
+		  `tlms_custom_key` varchar(255) NOT NULL,
+		  `tlms_custom_name` varchar(255) NOT NULL
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+		ALTER TABLE `tlms_customfields`
+		  ADD UNIQUE KEY `tlms_custom_key` (`tlms_custom_key`);
+		COMMIT;
+
+		*/
+
+		$accreditatieName = 'Accreditatiepunten'; # fieldname configured in TalentLMS itself
+		$courseTypeName = 'Type scholing'; # fieldname configured in TalentLMS itself
+		$courseDate = 'Datum'; # fieldname configured in TalentLMS itself
+		$courseLocation = 'Locatie'; # fieldname configured in TalentLMS itself
+
+        $customFields = array();
+        try {
+			$wpdb->query('TRUNCATE TABLE tlms_customfields');
+
+            $info = TalentLMS_Course::getCustomCourseFields();
+            if (!empty($info) && is_array($info)) {
+
+                foreach ($info as $key => $value) {
+                    if ($value['name'] == $accreditatieName || $value['name'] == $courseTypeName || $value['name'] == $courseDate || $value['name'] == $courseLocation) {
+						$wpdb->insert('tlms_customfields', array(
+							'tlms_custom_key' => $value['key'],
+							'tlms_custom_name' => $value['name']
+						));
+
+	                    $customFields[$value['name']] = $value['key'];
+                    }
+                }
+            }
+        }
+        catch(Exception $e){
+            $error = $e->getMessage();
+        }
+		// Duobus edit end #1
+
 		$result = $wpdb->get_results("SELECT * FROM ".TLMS_COURSES_TABLE);
 		if(empty($result)){
 			$apiCourses = TalentLMS_Course::all();
 
 			foreach($apiCourses as $course){
+				// Duobus start #2
+                $accreditatie = 0;
+                $typeScholing = '';
+                $datum = '';
+                $locatie = '';
+
+                if (!empty($customFields)) {
+                    if (!empty($customFields[$accreditatieName]) && !empty($course[$customFields[$accreditatieName]])) {
+                        $accreditatie = $course[$customFields[$accreditatieName]];
+                    }
+                    if (!empty($customFields[$courseTypeName]) && !empty($course[$customFields[$courseTypeName]])) {
+                        $typeScholing = $course[$customFields[$courseTypeName]];
+                    }
+					if (!empty($customFields[$courseDate]) && !empty($course[$customFields[$courseDate]])) {
+                        $datum = $course[$customFields[$courseDate]];
+                    }
+					if (!empty($customFields[$courseLocation]) && !empty($course[$customFields[$courseLocation]])) {
+                        $locatie = $course[$customFields[$courseLocation]];
+                    }
+                }
+                // Duobus end #2
+
 				$wpdb->insert(TLMS_COURSES_TABLE, array(
 					'id' => $course['id'],
 					'name' => $course['name'],
@@ -125,7 +197,11 @@ if(!function_exists('tlms_getCourses')){
 					'avatar' => $course['avatar'],
 					'big_avatar' => $course['big_avatar'],
 					'certification' => $course['certification'],
-					'certification_duration' => $course['certification_duration']
+					'certification_duration' => $course['certification_duration'],
+					'accreditatie' => $accreditatie, # Duobus edit
+					'course_type' => $typeScholing, # Duobus edit
+					'course_date' => $datum, # Duobus edit
+					'course_location' => $locatie # Duobus edit
 				));
 			}
 		}
