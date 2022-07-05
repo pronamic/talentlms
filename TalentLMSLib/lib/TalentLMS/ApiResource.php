@@ -2,259 +2,251 @@
 
 abstract class TalentLMS_ApiResource{
 
-	# Duobus edit: added this function from main API
-	protected static function _scopedGetCustomCourseFields($class){
-		$url = self::_classUrlByMethodName('customCourseFields');
-		$response = TalentLMS_ApiRequestor::request('get', $url);
-
-		return $response;
-	}
-
 	protected static function _scopedRetrieve($class, $id){
 		$url = self::_instanceUrl($class, $id);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+		
 		return $response;
 	}
-
+	
 	protected static function _scopedAll($class){
 		$url = self::_classUrl($class);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+		
 		return $response;
 	}
-
+	
 	protected static function _scopedLogin($class, $params){
 		self::_validateCall('login', $class, $params);
 		$url = self::_postUrl('login');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+		
 		return $response;
 	}
-
+	
 	protected static function _scopedLogout($class, $params){
 		self::_validateCall('logout', $class, $params);
 		$url = self::_postUrl('logout');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedSignup($class, $params){
 		self::_validateCall('signup', $class, $params);
 		$url = self::_postUrl('signup');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedAddUserToCourse($class, $params){
 		self::_validateCall('addUser', $class, $params);
 		$url = self::_postUrl('addUser');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedRemoveUserFromCourse($class, $params){
 		$url = self::_instanceUrlByParams('removeUserFromCourse', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedGotoCourse($class, $params){
 		$url = self::_instanceUrlByParams('gotoCourse', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+		
 		return $response;
 	}
-
+	
 	protected static function _scopedBuyCourse($class, $params){
 		self::_validateCall('buyCourse', $class, $params);
 		$url = self::_postUrl('buyCourse');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedBuyCategoryCourses($class, $params){
 		self::_validateCall('buyCategoryCourses', $class, $params);
 		$url = self::_postUrl('buyCategoryCourses');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedRetrieveLeafsAndCourses($class, $id){
 		$url = self::_instanceUrlByMethodName('leafsAndCourses', $id);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedGetCustomRegistrationFields($class){
 		$url = self::_classUrlByMethodName('customRegistrationFields');
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedSetStatus($class, $params){
 		$url = self::_instanceUrlByParams('userSetStatus', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+		
 		return $response;
 	}
-
+	
 	protected static function _scopedAddUserToGroup($class, $params){
 		$url = self::_instanceUrlByParams('addUserToGroup', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedRemoveUserFromGroup($class, $params){
 		$url = self::_instanceUrlByParams('removeUserFromGroup', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedAddCourseToGroup($class, $params){
 		$url = self::_instanceUrlByParams('addCourseToGroup', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedAddUserToBranch($class, $params){
 		$url = self::_instanceUrlByParams('addUserToBranch', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedAddCourseToBranch($class, $params){
 		$url = self::_instanceUrlByParams('addCourseToBranch', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedForgotUsername($class, $params){
 		$url = self::_instanceUrlByParams('forgotUsername', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedForgotPassword($class, $params){
 		$url = self::_instanceUrlByParams('forgotPassword', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedExtendedUserRetrieve($class, $params){
 		$url = self::_instanceUrlByParams('users', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+		
 		return $response;
 	}
-
+	
 	protected static function _scopedGetRateLimit($class){
 		$url = self::_instanceUrlByParams('getRateLimit', array());
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedGetUsersProgressInUnits($class, $params){
 		$url = self::_instanceUrlByParams('getUsersProgressInUnits', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedGetTestAnswers($class, $params){
 		$url = self::_instanceUrlByParams('getTestAnswers', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedGetSurveyAnswers($class, $params){
 		$url = self::_instanceUrlByParams('getSurveyAnswers', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedCreateCourse($class, $params){
 		self::_validateCall('create', $class, $params);
 		$url = self::_postUrl('createCourse');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedCreateGroup($class, $params){
 		self::_validateCall('create', $class, $params);
 		$url = self::_postUrl('createGroup');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedCreateBranch($class, $params){
 		self::_validateCall('create', $class, $params);
 		$url = self::_postUrl('createBranch');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedEditUser($class, $params){
 		self::_validateCall('editUser', $class, $params);
 		$url = self::_postUrl('editUser');
 		$response = TalentLMS_ApiRequestor::request('post', $url, $params);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedGetUsersByCustomField($class, $params){
 		$url = self::_instanceUrlByParams('getUsersByCustomField', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedGetUserStatusInCourse($class, $params){
 		$url = self::_instanceUrlByParams('getUserStatusInCourse', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _scopedGetTimeline($class, $params){
 		$url = self::_instanceUrlByParams('getTimeline', $params);
 		$response = TalentLMS_ApiRequestor::request('get', $url);
-
+	
 		return $response;
 	}
-
+	
 	protected static function _instanceUrl($class, $id){
 		$base = self::_classUrl($class);
 		$url = $base."/id:".$id;
-
+		
 		return $url;
 	}
-
+	
 	protected static function _classUrl($class){
 		$class = str_replace('TalentLMS_', '', $class);
 		$class = strtolower($class);
-
+		
 		if($class == 'user'){
 			return "/users";
 		}
@@ -274,18 +266,18 @@ abstract class TalentLMS_ApiResource{
 			return "/siteinfo";
 		}
 	}
-
+	
 	protected static function _instanceUrlByMethodName($method, $id){
 		$base = self::_classUrlByMethodName($method);
 		$url = $base."/id:".$id;
-
+	
 		return $url;
 	}
-
+	
 	protected static function _instanceUrlByParams($method, $params){
 		$base = self::_classUrlByMethodName($method);
 		$url = $base."/";
-
+		
 		foreach($params as $key => $value){
 			if($key == 'logout_redirect' || $key == 'course_completed_redirect' || $key == 'redirect_url' || $key == 'domain_url'){
 				$url .= $key.':'.base64_encode($value).',';
@@ -294,12 +286,12 @@ abstract class TalentLMS_ApiResource{
 				$url .= $key.':'.$value.',';
 			}
 		}
-
+		
 		$url = trim($url, ',');
-
+	
 		return $url;
 	}
-
+	
 	protected static function _classUrlByMethodName($method){
 		if($method == 'leafsAndCourses'){
 			return "/categoryleafsandcourses";
@@ -352,9 +344,6 @@ abstract class TalentLMS_ApiResource{
 		else if($method == 'getUserStatusInCourse'){
 			return "/getuserstatusincourse";
 		}
-		else if($method == 'customCourseFields'){ # Duobus added
-			return "/getcustomcoursefields";
-		}
 		else if($method == 'getTimeline'){
 			return "/gettimeline";
 		}
@@ -365,7 +354,7 @@ abstract class TalentLMS_ApiResource{
 			return "/getusersbycustomfield";
 		}
 	}
-
+	
 	protected static function _postUrl($method){
 		if($method == 'login'){
 			return "/userlogin";
@@ -398,7 +387,7 @@ abstract class TalentLMS_ApiResource{
 			return "/edituser";
 		}
 	}
-
+	
 	private static function _validateCall($method, $class, $params=null){
 		if($params && !is_array($params)){
 			throw new TalentLMS_ApiError("You must pass an array as the first argument to ".$class.'::'.$method."() method calls.");
