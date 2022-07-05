@@ -41,4 +41,9 @@ class TalentLMS_Course extends TalentLMS_ApiResource{
 		$class = get_class();
 		return self::_scopedGetUserStatusInCourse($class, $params);
 	}
+}	# Duobus edit: added this function from main API
+	public static function getCustomCourseFields(){
+		$class = get_class();
+		return self::_scopedGetCustomCourseFields($class);
+	}
 }
