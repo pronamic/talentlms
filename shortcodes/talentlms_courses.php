@@ -32,8 +32,8 @@
                 <td><a href="?tlms-course=<?php echo $course->id; ?>"><?php echo $course->name; echo ($course->course_code) ? "(".$course->course_code.")":''; ?></a></td>
                 <td><?php echo $course->description; ?></td>
                 <td><?php echo $course->price; ?></td>
-                <td><?php echo date(tlms_getDateFormat(true), $course->creation_date); ?></td>
-                <td><?php echo date(tlms_getDateFormat(true), $course->last_update_on); ?></td>
+                <td><?php echo date($dateFormat, $course->creation_date); ?></td>
+                <td><?php echo date($dateFormat, $course->last_update_on); ?></td>
                 <td style="display:none;"><?php echo $course->category_id; ?></td>
             </tr>
 		<?php endforeach; ?>
@@ -62,7 +62,7 @@
             if(id=='all'){
                 courseTable.search('').columns().search('').draw();
             }else{
-                courseTable.column(3).search(id, true, true).draw();
+                courseTable.column(6).search(id, true, true).draw();
             }
             jQuery(this).siblings('input:checkbox').not(this).removeAttr('checked');
         });
